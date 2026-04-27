@@ -346,6 +346,27 @@
       font-weight: 700;
       margin-bottom: 24px;
     }
+    .plan-img {
+      width: calc(100% + 48px);
+      height: 160px;
+      margin: -30px -24px 20px -24px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px 16px 0 0;
+      transition: transform 0.4s ease;
+      overflow: hidden;
+    }
+    .plan-card:hover .plan-img { transform: scale(1.03); }
+    .feature-img {
+      width: calc(100% + 60px);
+      height: 180px;
+      margin: -40px -30px 20px -30px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px 20px 0 0;
+      transition: transform 0.4s ease;
+    }
+    .feature-card:hover .feature-img { transform: scale(1.03); }
 
     /* 5. Recipe Gallery */
     .recipe-grid {
@@ -1200,11 +1221,13 @@
         <h3>AI Smart Coaching</h3>
         <p>Get real-time actionable insights based on your eating habits and progress.</p>
       </div>
-      <div class="feature-card fade-up">
+      <div class="feature-card fade-up" style="padding-top: 0; overflow: hidden;">
+        <div class="feature-img" style="background-image: url('assets/feature_easy_recipes.png');"></div>
         <h3>Easy Recipes</h3>
         <p>Hundreds of quick, delicious recipes that don't compromise on flavor or health.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay: 0.1s;">
+      <div class="feature-card fade-up" style="transition-delay: 0.1s; padding-top: 0; overflow: hidden;">
+        <div class="feature-img" style="background-image: url('assets/feature_plant_based.png');"></div>
         <h3>Plant-Based Options</h3>
         <p>Extensive library of vegan and vegetarian meals to support plant-forward eating.</p>
       </div>
@@ -1225,24 +1248,28 @@
       </div>
       <div class="meal-plans-grid">
         <div class="plan-card fade-up">
+          <div class="plan-img" style="background-image: url('assets/meal_plan_vegan.png');"></div>
           <h3>Vegan Plan</h3>
           <p>100% plant-based meals rich in micronutrients and fiber.</p>
           <div class="plan-badge">1800 - 2200 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="alert('Unlocking the Vegan Plan details...')">View Plan</button>
         </div>
         <div class="plan-card fade-up" style="transition-delay: 0.1s;">
+          <div class="plan-img" style="background-image: url('assets/meal_plan_keto.png');"></div>
           <h3>Keto Protocol</h3>
           <p>High fat, low carb meals designed for sustained ketosis.</p>
           <div class="plan-badge">1600 - 2000 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="alert('Unlocking the Keto Protocol details...')">View Plan</button>
         </div>
         <div class="plan-card fade-up" style="transition-delay: 0.2s;">
+          <div class="plan-img" style="background-image: url('assets/meal_plan_balanced.png');"></div>
           <h3>Balanced Diet</h3>
           <p>The perfect macro split for everyday energy and wellness.</p>
           <div class="plan-badge">2000 - 2400 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="alert('Unlocking the Balanced Diet details...')">View Plan</button>
         </div>
         <div class="plan-card fade-up" style="transition-delay: 0.3s;">
+          <div class="plan-img" style="background-image: url('assets/meal_plan_highprotein.png');"></div>
           <h3>High Protein</h3>
           <p>Muscle-building focus with optimal protein distribution.</p>
           <div class="plan-badge">2200 - 2800 kcal</div>
