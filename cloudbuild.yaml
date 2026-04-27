@@ -3,20 +3,22 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
+      - '--no-cache'
+      - '--progress=plain'           # Show full build output for easier debugging
       - '-t'
       - 'gcr.io/$PROJECT_ID/nutrilife-backend:$COMMIT_SHA'
       - '-t'
       - 'gcr.io/$PROJECT_ID/nutrilife-backend:latest'
-      - './backend'   # <-- build context is the backend folder
+      - './backend'                  # Build context = backend folder (where Dockerfile lives)
 
-  # Step 2: Push the image to Google Container Registry
+  # Step 2: Push image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - '--all-tags'
       - 'gcr.io/$PROJECT_ID/nutrilife-backend'
 
-  # Step 3: Deploy to Cloud Run
+  # Step 3: Deploy to Cloud Run (Mumbai region - lowest latency from India)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -24,12 +26,12 @@ steps:
       - 'deploy'
       - 'nutrilife-backend'
       - '--image=gcr.io/$PROJECT_ID/nutrilife-backend:$COMMIT_SHA'
-      - '--region=asia-south1'      # Mumbai — closest to India
+      - '--region=asia-south1'
       - '--platform=managed'
-      - '--allow-unauthenticated'   # Public API
+      - '--allow-unauthenticated'
       - '--port=8080'
       - '--memory=512Mi'
-      - '--min-instances=0'         # Scale to zero when idle (saves cost)
+      - '--min-instances=0'
       - '--max-instances=3'
 
 images:
