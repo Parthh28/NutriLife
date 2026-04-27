@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  password       String
+  name           String?
+  age            Int?
+  weight         Float?
+  height         Float?
+  gender         String?
+  activityLevel  Float?
+  goal           String?  // 'lose', 'maintain', 'gain'
+  dailyCalories  Int?
+  macroSplit     Json?    
+  
+  foodLogs       FoodLog[]
+  patterns       BehaviorPattern?
+  interventions  InterventionLog[]
+  habits         Habit[]
+  createdAt      DateTime @default(now())
+}
+
+model Habit {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  streak    Int      @default(0)
+  history   Json     // Array of dates [ "2026-04-27", "2026-04-26" ]
+  createdAt DateTime @default(now())
+}
+
+model FoodLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  foodName  String
+  calories  Int
+  macros    Json?
+  mealType  String   
+  createdAt DateTime @default(now())
+}
+
+model BehaviorPattern {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  lateNightSnacker Boolean  @default(false)
+  skipsBreakfast   Boolean  @default(false)
+  sweetTooth       Boolean  @default(false)
+  lastUpdated      DateTime @default(now())
+}
+
+model InterventionLog {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  triggerType  String   
+  suggestion   String
+  accepted     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
