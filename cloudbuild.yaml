@@ -4,12 +4,14 @@ steps:
     args:
       - 'build'
       - '--no-cache'
-      - '--progress=plain'           # Show full build output for easier debugging
+      - '--progress=plain'
+      - '-f'
+      - './backend/Dockerfile'       # Explicit path to Dockerfile (Cloud Build runs from /workspace root)
       - '-t'
       - 'gcr.io/$PROJECT_ID/nutrilife-backend:$COMMIT_SHA'
       - '-t'
       - 'gcr.io/$PROJECT_ID/nutrilife-backend:latest'
-      - './backend'                  # Build context = backend folder (where Dockerfile lives)
+      - './backend'                  # Build context = backend folder
 
   # Step 2: Push image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
