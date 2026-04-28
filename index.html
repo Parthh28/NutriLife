@@ -1550,8 +1550,8 @@
       </div>
       <div class="feature-card fade-up" style="transition-delay: 0.2s; padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_ai_coaching.png');"></div>
-        <h3>AI Smart Coaching</h3>
-        <p>Get real-time actionable insights based on your eating habits and progress.</p>
+        <h3>AI Assistant</h3>
+        <p>Your dedicated NutriBot is always ready to answer your health queries.</p>
       </div>
       <div class="feature-card fade-up" style="padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_easy_recipes.png');"></div>
@@ -1884,105 +1884,7 @@
     </div>
   </section>
 
-  <!-- 8. AI Smart Coach -->
-  <section id="coach" class="container">
-    <div class="section-header fade-up">
-      <h2>AI Smart Coach</h2>
-      <p>Your personal intelligence layer for better decision making.</p>
-    </div>
-    
-    <div class="dashboard-panel fade-up">
-      <div class="coach-tabs">
-        <button class="coach-tab active" onclick="switchCoachTab('tab-habits', this)">Habit Tracker</button>
-        <button class="coach-tab" onclick="switchCoachTab('tab-suggest', this)">Suggest Meal</button>
-      </div>
 
-      <!-- Habits Tab -->
-      <div id="tab-habits" class="tab-pane active">
-        <div class="habit-list">
-          <div class="habit-row">
-            <div class="habit-name">Morning Hydration</div>
-            <div class="habit-days">
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-            </div>
-            <div class="habit-streak">6 🔥</div>
-          </div>
-          <div class="habit-row">
-            <div class="habit-name">Eat 3 Veggies</div>
-            <div class="habit-days">
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-            </div>
-            <div class="habit-streak">0 🔥</div>
-          </div>
-          <div class="habit-row">
-            <div class="habit-name">No Sugar After 8PM</div>
-            <div class="habit-days">
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-            </div>
-            <div class="habit-streak">12 🔥</div>
-          </div>
-          <div class="habit-row">
-            <div class="habit-name">Hit Protein Goal</div>
-            <div class="habit-days">
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-            </div>
-            <div class="habit-streak">2 🔥</div>
-          </div>
-          <div class="habit-row">
-            <div class="habit-name">7+ Hours Sleep</div>
-            <div class="habit-days">
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot filled" onclick="toggleHabit(this)"></div>
-              <div class="day-dot" onclick="toggleHabit(this)"></div>
-            </div>
-            <div class="habit-streak">6 🔥</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Suggest Meal Tab -->
-      <div id="tab-suggest" class="tab-pane">
-        <div class="meal-pills">
-          <button class="meal-pill active" onclick="filterSuggestions('All', this)">All</button>
-          <button class="meal-pill" onclick="filterSuggestions('Light', this)">Light</button>
-          <button class="meal-pill" onclick="filterSuggestions('Filling', this)">Filling</button>
-          <button class="meal-pill" onclick="filterSuggestions('Quick', this)">Quick</button>
-          <button class="meal-pill" onclick="filterSuggestions('High protein', this)">High protein</button>
-        </div>
-        <div class="meal-grid" id="suggestionGrid">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- 9. Testimonials -->
   <section id="testimonials" class="testimonials-bg">
@@ -3926,48 +3828,7 @@
       });
     }
 
-    // Smart Coach Tabs
-    function switchCoachTab(tabId, btn) {
-      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.coach-tab').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
-    }
 
-    // Suggest Meal Filter
-    const mealSuggestions = [
-      { name: "Salmon & Quinoa Bowl", cal: 480, mac: "38g Protein", tags: ["Filling", "High protein"] },
-      { name: "Spicy Avocado Toast", cal: 320, mac: "Healthy Fats", tags: ["Light", "Quick"] },
-      { name: "Greek Yogurt Parfait", cal: 250, mac: "22g Protein", tags: ["Light", "High protein", "Quick"] },
-      { name: "Mediterranean Salad", cal: 350, mac: "High Fiber", tags: ["Light", "Filling"] },
-      { name: "Turkey Wrap", cal: 420, mac: "35g Protein", tags: ["Quick", "High protein", "Filling"] },
-      { name: "Hummus Pita", cal: 380, mac: "Plant Based", tags: ["Quick", "Light"] }
-    ];
-
-    function renderSuggestions(filterTag) {
-      const grid = document.getElementById('suggestionGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-      
-      const filtered = filterTag === 'All' ? mealSuggestions : mealSuggestions.filter(m => m.tags.includes(filterTag));
-      
-      filtered.forEach(meal => {
-        const card = document.createElement('div');
-        card.className = 's-meal-card fade-up visible';
-        card.innerHTML = `
-          <h4>${meal.name}</h4>
-          <p>${meal.cal} kcal • ${meal.mac}</p>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function filterSuggestions(tag, btn) {
-      document.querySelectorAll('.meal-pill').forEach(el => el.classList.remove('active'));
-      btn.classList.add('active');
-      renderSuggestions(tag);
-    }
 
     function scrollToTargets() {
       const el = document.getElementById('targetEditor');
@@ -4025,19 +3886,11 @@
       }
     });
 
-    // Habit Tracker interactive streak logic
-    function toggleHabit(element) {
-      element.classList.toggle('filled');
-      const row = element.closest('.habit-row');
-      const filledCount = row.querySelectorAll('.day-dot.filled').length;
-      const streakEl = row.querySelector('.habit-streak');
-      streakEl.textContent = `${filledCount} 🔥`;
-    }
+
 
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
       updateUIForUser();
-      renderSuggestions('All');
       // Ensure initial view has visible items
       const activeView = document.querySelector('.view-section.active');
       if (activeView) {
