@@ -5,6 +5,8 @@ import { CalorieEngine } from './services/calorie.service';
 import { AuthService } from './services/auth.service';
 import { FoodService } from './services/food.service';
 import { DashboardService } from './services/dashboard.service';
+import { ChatbotService } from './services/chatbot.service';
+import { BlogService } from './services/blog.service';
 import { authenticate, AuthRequest } from './middleware/auth.middleware';
 
 const app = express();
@@ -47,6 +49,15 @@ app.post('/auth/reset-password', async (req: Request, res: Response) => {
   }
 });
 
+app.post('/user/update-profile', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const user = await AuthService.updateProfile(req.user!.userId, req.body);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Mock endpoint for intervention check
 app.get('/intervention/check', async (req: Request, res: Response) => {
@@ -84,6 +95,15 @@ app.get('/food/logs', authenticate, async (req: AuthRequest, res: Response) => {
   }
 });
 
+app.delete('/food/log/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    await FoodService.deleteLog(req.user!.userId, req.params.id);
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get('/behavior/insights', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     const insights = await FoodService.analyzeBehavior(req.user!.userId);
@@ -98,6 +118,70 @@ app.get('/user/dashboard', authenticate, async (req: AuthRequest, res: Response)
   try {
     const summary = await DashboardService.getSummary(req.user!.userId);
     res.json(summary);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/user/weekly-stats', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const stats = await DashboardService.getWeeklyStats(req.user!.userId);
+    res.json(stats);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Chatbot Routes
+app.post('/chat', authenticate, async (req: AuthRequest, res: Response) => {
+  console.log(`[Chat] Request from user ${req.user!.userId}`);
+  try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+    const response = await ChatbotService.getResponse(req.user!.userId, message);
+    res.json({ response });
+  } catch (error: any) {
+    console.error(`[Chat Error] ${error.message}`);
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
+  }
+});
+
+app.get('/chat/history', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const history = await ChatbotService.getHistory(req.user!.userId);
+    res.json(history);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Blog Routes
+app.get('/blogs', async (req: Request, res: Response) => {
+  try {
+    const blogs = await BlogService.getAllBlogs();
+    res.json(blogs);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/blogs', async (req: Request, res: Response) => {
+  try {
+    const blog = await BlogService.createBlog(req.body);
+    res.json(blog);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/blogs/:id/like', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+    const like = await BlogService.toggleLike(req.params.id, userId);
+    const count = await BlogService.getLikesCount(req.params.id);
+    res.json({ like, count });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

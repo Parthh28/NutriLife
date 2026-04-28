@@ -21,8 +21,11 @@ model User {
   goal           String?  // 'lose', 'maintain', 'gain'
   dailyCalories  Int?
   macroSplit     Json?    
+  hydrationGoal  Float?   // in Liters
+  fiberGoal      Int?     // in grams
   
   foodLogs       FoodLog[]
+  chatMessages   ChatMessage[]
   patterns       BehaviorPattern?
   interventions  InterventionLog[]
   habits         Habit[]
@@ -68,4 +71,34 @@ model InterventionLog {
   suggestion   String
   accepted     Boolean  @default(false)
   createdAt    DateTime @default(now())
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String   @unique
+  category    String
+  author      String
+  readTime    String
+  excerpt     String
+  content     String   @db.Text
+  image       String
+  likes       Like[]
+  createdAt   DateTime @default(now())
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  blogId    String
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  userId    String?  
+  createdAt DateTime @default(now())
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  role      String   // 'user' or 'model'
+  text      String   @db.Text
+  createdAt DateTime @default(now())
 }

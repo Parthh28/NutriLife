@@ -74,8 +74,36 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.name,
+        age: user.age,
+        weight: user.weight,
+        height: user.height,
+        gender: user.gender,
+        activityLevel: user.activityLevel,
+        goal: user.goal,
+        dailyCalories: user.dailyCalories,
+        macroSplit: user.macroSplit,
+        hydrationGoal: user.hydrationGoal,
+        fiberGoal: user.fiberGoal
       },
     };
+  }
+
+  static async updateProfile(userId: string, data: any) {
+    return await prisma.user.update({
+      where: { id: userId },
+      data: {
+        dailyCalories: data.dailyCalories,
+        macroSplit: data.macroSplit,
+        age: data.age,
+        weight: data.weight,
+        height: data.height,
+        gender: data.gender,
+        activityLevel: data.activityLevel,
+        goal: data.goal,
+        hydrationGoal: data.hydrationGoal,
+        fiberGoal: data.fiberGoal
+      }
+    });
   }
 }
 

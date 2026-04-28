@@ -16,7 +16,9 @@ export class CalorieEngine {
         proteinGrams: Math.round((tdee * 0.30) / 4),
         carbGrams: Math.round((tdee * 0.40) / 4),
         fatGrams: Math.round((tdee * 0.30) / 9)
-      }
+      },
+      hydrationLiters: parseFloat(((weightKg * 35) / 1000).toFixed(1)),
+      fiberGrams: Math.round((tdee / 1000) * 14)
     };
   }
 }

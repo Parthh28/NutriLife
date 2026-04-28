@@ -14,7 +14,8 @@ yarn-error.log*
 .env.production.local
 
 # Prisma
-/prisma/migrations/
+*.db
+*.db-journal
 
 # OS Files
 .DS_Store

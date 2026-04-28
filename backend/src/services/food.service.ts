@@ -3,11 +3,23 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export class FoodService {
-  static async logFood(userId: string, foodData: { foodName: string, calories: number, macros?: any, mealType: string }) {
+  static async logFood(userId: string, foodData: any) {
+    // Basic simulation for demo: If calories aren't provided, estimate them
+    const calories = foodData.calories || Math.floor(Math.random() * 300) + 150;
+    const mealType = foodData.mealType || 'Snack';
+    const macros = foodData.macros || {
+      protein: Math.floor(calories * 0.06),
+      carbs: Math.floor(calories * 0.1),
+      fat: Math.floor(calories * 0.03)
+    };
+
     return await prisma.foodLog.create({
       data: {
         userId,
-        ...foodData
+        foodName: foodData.foodName,
+        calories,
+        mealType,
+        macros
       }
     });
   }
@@ -56,5 +68,11 @@ export class FoodService {
     });
 
     return patterns;
+  }
+
+  static async deleteLog(userId: string, logId: string) {
+    return await prisma.foodLog.delete({
+      where: { id: logId, userId }
+    });
   }
 }
