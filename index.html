@@ -1065,8 +1065,46 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
     
+    .mobile-menu-toggle {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--primary-green);
+      margin-left: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--bg-cream);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        border-top: 1px solid var(--border-color);
+        z-index: 1000;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links a {
+        padding: 15px 24px;
+        width: 100%;
+        border-bottom: 1px solid rgba(0,0,0,0.02);
+      }
+      #navGuest {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 640px) {
-      .nav-links { display: none; }
       .hero-content h1 { font-size: 40px; }
       .features-grid, .recipe-grid, .test-grid, .blog-grid, .meal-plans-grid, .metrics-grid, .insight-cards, .meal-grid, .footer-grid { grid-template-columns: 1fr; }
       .circle-bg { width: 300px; height: 300px; font-size: 120px; }
@@ -1463,15 +1501,13 @@
   <!-- 1. Sticky Navbar -->
   <header id="navbar">
     <div class="container nav-container">
-      <a href="#" class="brand">NutriLife</a>
+      <a href="javascript:void(0)" onclick="showSection('home')" class="brand">NutriLife</a>
       <nav class="nav-links">
-        <a href="#" onclick="showSection('home')">Home</a>
-        <a href="#" onclick="showSection('features')">Features</a>
-        <a href="#" onclick="showSection('recipes')">Recipes</a>
-        <a href="#" onclick="showSection('ai-coach')">AI Coach</a>
-        <a href="#" onclick="showSection('dashboard')" class="auth-only" style="display:none">Dashboard</a>
-        <a href="#" onclick="showSection('auth')" id="login-nav-btn">Login</a>
-        <a href="#" onclick="logout()" id="logout-nav-btn" style="display:none">Logout</a>
+        <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
+        <a href="javascript:void(0)" onclick="showSection('features')">Features</a>
+        <a href="javascript:void(0)" onclick="showSection('recipes')">Recipes</a>
+        <a href="javascript:void(0)" onclick="showSection('ai-coach')">AI Coach</a>
+        <a href="javascript:void(0)" onclick="showSection('dashboard')" id="dashboard-nav-link" style="display:none">Dashboard</a>
       </nav>
       <div id="navGuest">
         <button onclick="openAuth('login')" class="btn btn-outline" style="margin-right: 10px; padding: 10px 20px;">Login</button>
@@ -1490,8 +1526,8 @@
             <span>🚪</span> Sign Out
           </div>
         </div>
-
       </div>
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</div>
     </div>
   </header>
 
@@ -3088,14 +3124,42 @@
 
 
     function showSection(pageId) {
-      showPage(pageId);
+      // Close mobile menu if open
+      const navLinks = document.querySelector('.nav-links');
+      if (navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+
+      const isView = ['home', 'dashboard', 'ai-coach'].includes(pageId);
+      
+      if (isView) {
+        showPage(pageId);
+      } else {
+        // Handle sections within homeView (features, recipes, nutrition, etc.)
+        const wasActive = document.getElementById('homeView').classList.contains('active');
+        showPage('home', !wasActive); // Only scroll to top if we weren't already on home
+        
+        // Small timeout to allow view to become active if it wasn't
+        setTimeout(() => {
+          const el = document.getElementById(pageId);
+          if (el) {
+            window.scrollTo({
+              top: el.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        }, wasActive ? 0 : 100);
+      }
     }
 
-    function showPage(pageId) {
-      document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+    function showPage(pageId, shouldScroll = true) {
       const targetView = document.getElementById(pageId + 'View');
-      if (targetView) {
-        targetView.classList.add('active');
+      if (!targetView) return;
+
+      document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+      targetView.classList.add('active');
+      
+      if (shouldScroll) {
         window.scrollTo(0, 0);
       }
 
@@ -3113,9 +3177,7 @@
       }
       
       // Manually trigger visibility for view-switch
-      if (targetView) {
-        targetView.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
-      }
+      targetView.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
 
       if (pageId === 'dashboard') {
         refreshDashboard();
@@ -3374,11 +3436,14 @@
       const userJson = localStorage.getItem('nutri_user');
       const navGuest = document.getElementById('navGuest');
       const navUser = document.getElementById('navUser');
+      const dashLink = document.getElementById('dashboard-nav-link');
 
       if (userJson) {
         const user = JSON.parse(userJson);
         navGuest.style.display = 'none';
         navUser.classList.add('active');
+        if (dashLink) dashLink.style.display = 'inline-block';
+        
         document.getElementById('userName').innerText = user.name || user.email;
         document.getElementById('dashUserName').innerText = user.name || user.email.split('@')[0];
         document.getElementById('userInitial').innerText = (user.name || user.email)[0].toUpperCase();
@@ -3398,6 +3463,7 @@
       } else {
         navGuest.style.display = 'block';
         navUser.classList.remove('active');
+        if (dashLink) dashLink.style.display = 'none';
         showPage('home'); // Reset to home if logout
       }
     }
@@ -3406,6 +3472,11 @@
 
     function toggleProfileDropdown() {
       document.getElementById('profileDropdown').classList.toggle('active');
+    }
+
+    function toggleMobileMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
     }
 
     function logout() {
