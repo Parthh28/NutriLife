@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="PillNav.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
@@ -236,18 +239,19 @@
 
     /* 1. Navbar */
     header {
-      position: sticky;
+      position: absolute;
       top: 0;
+      left: 0;
+      width: 100%;
       z-index: 1000;
-      transition: var(--transition);
-      padding: 20px 0;
+      padding: 15px 0;
     }
     header.scrolled {
-      background-color: rgba(250, 250, 247, 0.85);
+      background-color: rgba(250, 250, 247, 0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      padding: 12px 0;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      padding: 8px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
     .nav-container {
       display: flex;
@@ -1500,34 +1504,35 @@
 
   <!-- 1. Sticky Navbar -->
   <header id="navbar">
-    <div class="container nav-container">
-      <a href="javascript:void(0)" onclick="showSection('home')" class="brand">NutriLife</a>
-      <nav class="nav-links">
-        <a href="javascript:void(0)" onclick="showSection('home')">Home</a>
-        <a href="javascript:void(0)" onclick="showSection('features')">Features</a>
-        <a href="javascript:void(0)" onclick="showSection('recipes')">Recipes</a>
-        <a href="javascript:void(0)" onclick="showSection('ai-coach')">AI Coach</a>
-        <a href="javascript:void(0)" onclick="showSection('dashboard')" id="dashboard-nav-link" style="display:none">Dashboard</a>
-      </nav>
-      <div id="navGuest">
-        <button onclick="openAuth('login')" class="btn btn-outline" style="margin-right: 10px; padding: 10px 20px;">Login</button>
-        <button onclick="openAuth('signup')" class="btn btn-primary">Sign Up</button>
-      </div>
-      <div id="navUser" class="nav-user">
+    <div class="container nav-container" style="padding: 10px 24px; display: flex; justify-content: space-between; align-items: center;">
+      <a href="javascript:void(0)" onclick="showSection('home')" class="brand" style="flex: 1; display: flex; align-items: center; gap: 10px;">
+        <img src="assets/logo.png" alt="NutriLife Logo" style="height: 50px; width: auto;">
+        <span>NutriLife</span>
+      </a>
+      
+      <div id="pill-nav-root" style="flex: 2; display: flex; justify-content: center;"></div>
+      
+      <div style="flex: 1; display: flex; justify-content: flex-end; align-items: center; position: relative;">
+        <div id="navGuest">
+          <button onclick="openAuth('login')" class="btn btn-outline" style="margin-right: 10px; padding: 10px 20px;">Login</button>
+          <button onclick="openAuth('signup')" class="btn btn-primary">Sign Up</button>
+        </div>
+        <div id="navUser" class="nav-user">
         <div class="user-profile-trigger" onclick="toggleProfileDropdown()">
           <div class="user-avatar" id="userInitial">U</div>
           <span id="userName">User</span>
           <span style="font-size: 12px; opacity: 0.5;">▼</span>
         </div>
         <div class="profile-dropdown" id="profileDropdown">
-          <div class="dropdown-item" onclick="showPage('home')"><span>🏠</span> Home</div>
-          <div class="dropdown-item" onclick="showPage('dashboard')"><span>👤</span> My Profile</div>
+          <div class="dropdown-item" onclick="showPage('home')"><i class="fas fa-home"></i> Home</div>
+          <div class="dropdown-item" onclick="showPage('dashboard')"><i class="fas fa-user-circle"></i> My Profile</div>
           <div class="dropdown-item logout-item" onclick="logout()">
-            <span>🚪</span> Sign Out
+            <i class="fas fa-sign-out-alt"></i> Sign Out
           </div>
         </div>
       </div>
-      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</div>
+      </div>
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="display: none;">☰</div>
     </div>
   </header>
 
@@ -1678,8 +1683,8 @@
           </div>
           <h3 class="recipe-title">Green Smoothie Bowl</h3>
           <div class="recipe-meta">
-            <span>🔥 320 kcal</span>
-            <span>⏱️ 10 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 320 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 10 min</span>
           </div>
         </div>
       </div>
@@ -1694,8 +1699,8 @@
           </div>
           <h3 class="recipe-title">Quinoa Buddha Bowl</h3>
           <div class="recipe-meta">
-            <span>🔥 450 kcal</span>
-            <span>⏱️ 25 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 450 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 25 min</span>
           </div>
         </div>
       </div>
@@ -1710,8 +1715,8 @@
           </div>
           <h3 class="recipe-title">Grilled Salmon Salad</h3>
           <div class="recipe-meta">
-            <span>🔥 520 kcal</span>
-            <span>⏱️ 35 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 520 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 35 min</span>
           </div>
         </div>
       </div>
@@ -1726,8 +1731,8 @@
           </div>
           <h3 class="recipe-title">Avocado Toast Platter</h3>
           <div class="recipe-meta">
-            <span>🔥 280 kcal</span>
-            <span>⏱️ 5 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 280 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 5 min</span>
           </div>
         </div>
       </div>
@@ -1742,8 +1747,8 @@
           </div>
           <h3 class="recipe-title">Chickpea Curry</h3>
           <div class="recipe-meta">
-            <span>🔥 480 kcal</span>
-            <span>⏱️ 30 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 480 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 30 min</span>
           </div>
         </div>
       </div>
@@ -1758,8 +1763,8 @@
           </div>
           <h3 class="recipe-title">Berry Overnight Oats</h3>
           <div class="recipe-meta">
-            <span>🔥 350 kcal</span>
-            <span>⏱️ 5 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 350 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 5 min</span>
           </div>
         </div>
       </div>
@@ -1774,8 +1779,8 @@
           </div>
           <h3 class="recipe-title">Paneer Tikka Platter</h3>
           <div class="recipe-meta">
-            <span>🔥 380 kcal</span>
-            <span>⏱️ 20 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 380 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 20 min</span>
           </div>
         </div>
       </div>
@@ -1790,8 +1795,8 @@
           </div>
           <h3 class="recipe-title">Grilled Chicken Breast</h3>
           <div class="recipe-meta">
-            <span>🔥 420 kcal</span>
-            <span>⏱️ 25 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 420 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 25 min</span>
           </div>
         </div>
       </div>
@@ -1806,8 +1811,8 @@
           </div>
           <h3 class="recipe-title">Hearty Lentil Soup</h3>
           <div class="recipe-meta">
-            <span>🔥 310 kcal</span>
-            <span>⏱️ 20 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 310 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 20 min</span>
           </div>
         </div>
       </div>
@@ -1822,8 +1827,8 @@
           </div>
           <h3 class="recipe-title">Mediterranean Tofu Salad</h3>
           <div class="recipe-meta">
-            <span>🔥 340 kcal</span>
-            <span>⏱️ 15 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 340 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 15 min</span>
           </div>
         </div>
       </div>
@@ -1838,8 +1843,8 @@
           </div>
           <h3 class="recipe-title">Egg White Omelette</h3>
           <div class="recipe-meta">
-            <span>🔥 280 kcal</span>
-            <span>⏱️ 12 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 280 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 12 min</span>
           </div>
         </div>
       </div>
@@ -1854,8 +1859,56 @@
           </div>
           <h3 class="recipe-title">Lean Turkey Meatballs</h3>
           <div class="recipe-meta">
-            <span>🔥 390 kcal</span>
-            <span>⏱️ 30 min</span>
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 390 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 30 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 13: Dal Tadka -->
+      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r13')">
+        <div class="recipe-img" style="background-image: url('recipe_dal_tadka_jeera_rice_premium_1777902030190.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Dal Tadka & Jeera Rice</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 340 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 20 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 14: Veg Biryani -->
+      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.1s;" onclick="openRecipe('r14')">
+        <div class="recipe-img" style="background-image: url('recipe_vegetable_biryani_premium_1777902045937.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Medium</span>
+          </div>
+          <h3 class="recipe-title">Vegetable Biryani</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 420 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 40 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 15: Masala Dosa -->
+      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.2s;" onclick="openRecipe('r15')">
+        <div class="recipe-img" style="background-image: url('recipe_masala_dosa_premium_1777902060644.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Medium</span>
+          </div>
+          <h3 class="recipe-title">Crispy Masala Dosa</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 280 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 15 min</span>
           </div>
         </div>
       </div>
@@ -1950,8 +2003,6 @@
         </div>
       </div>
     </div>
-  </section>
-
   <!-- 10. Wellness Journal -->
   <section id="blog" class="container">
     <div class="section-header fade-up">
@@ -1978,6 +2029,7 @@
       <!-- Populated by JS -->
     </div>
   </section>
+
 
   <!-- 11. Newsletter -->
   <section class="container">
@@ -2091,26 +2143,26 @@
         <form id="profileCalcForm">
           <div class="calc-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Age</label>
+              <label for="pCalcAge">Age</label>
               <input type="number" id="pCalcAge" placeholder="25" required>
             </div>
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Gender</label>
+              <label for="pCalcGender">Gender</label>
               <select id="pCalcGender" class="form-input" style="width: 100%; border-radius: 12px; border: 1px solid var(--light-green); padding: 12px;">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
             </div>
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Weight (kg)</label>
+              <label for="pCalcWeight">Weight (kg)</label>
               <input type="number" id="pCalcWeight" placeholder="70" required>
             </div>
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Height (cm)</label>
+              <label for="pCalcHeight">Height (cm)</label>
               <input type="number" id="pCalcHeight" placeholder="175" required>
             </div>
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Activity Level</label>
+              <label for="pCalcActivity">Activity Level</label>
               <select id="pCalcActivity" class="form-input" style="width: 100%; border-radius: 12px; border: 1px solid var(--light-green); padding: 12px;">
                 <option value="1.2">Sedentary</option>
                 <option value="1.375">Lightly Active</option>
@@ -2120,7 +2172,7 @@
               </select>
             </div>
             <div class="auth-input-group" style="margin-bottom: 0;">
-              <label>Your Goal</label>
+              <label for="pCalcGoal">Your Goal</label>
               <select id="pCalcGoal" class="form-input" style="width: 100%; border-radius: 12px; border: 1px solid var(--light-green); padding: 12px;">
                 <option value="maintain">Maintain Weight</option>
                 <option value="lose">Weight Loss</option>
@@ -2204,10 +2256,10 @@
           <h2 class="brand">NutriLife</h2>
           <p>Eat Well. Live Well. Feel Amazing. Our mission is to make premium health accessible to everyone through smart technology and culinary excellence.</p>
           <div class="social-links">
-            <a href="#">📱</a>
-            <a href="#">📸</a>
-            <a href="#">🐦</a>
-            <a href="#">📌</a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
         <div>
@@ -2264,11 +2316,11 @@
       <!-- Login Form -->
       <form id="loginForm" class="auth-form active">
         <div class="auth-input-group">
-          <label>Email Address</label>
+          <label for="loginEmail">Email Address</label>
           <input type="email" id="loginEmail" placeholder="you@example.com" required>
         </div>
         <div class="auth-input-group">
-          <label>Password</label>
+          <label for="loginPass">Password</label>
           <input type="password" id="loginPass" placeholder="••••••••" required>
         </div>
         <div style="text-align: right; margin-top: -10px; margin-bottom: 20px;">
@@ -2281,11 +2333,11 @@
       <form id="forgotForm" class="auth-form">
         <p style="margin-bottom: 20px; font-size: 14px; color: var(--text-gray);">Please enter your email and a new password to reset your account access.</p>
         <div class="auth-input-group">
-          <label>Email Address</label>
+          <label for="forgotEmail">Email Address</label>
           <input type="email" id="forgotEmail" placeholder="you@example.com" required>
         </div>
         <div class="auth-input-group">
-          <label>New Password</label>
+          <label for="resetNewPass">New Password</label>
           <input type="password" id="resetNewPass" placeholder="Enter new password" required>
         </div>
         <button type="submit" class="btn btn-primary auth-btn">Update Password</button>
@@ -2298,15 +2350,15 @@
       <!-- Signup Form -->
       <form id="signupForm" class="auth-form">
         <div class="auth-input-group">
-          <label>Full Name</label>
+          <label for="signupName">Full Name</label>
           <input type="text" id="signupName" placeholder="Your Name" required>
         </div>
         <div class="auth-input-group">
-          <label>Email Address</label>
+          <label for="signupEmail">Email Address</label>
           <input type="email" id="signupEmail" placeholder="you@example.com" required>
         </div>
         <div class="auth-input-group">
-          <label>Password</label>
+          <label for="signupPass">Password</label>
           <input type="password" id="signupPass" placeholder="Create a password" required>
         </div>
         <button type="submit" class="btn btn-primary auth-btn">Create Account</button>
@@ -2321,12 +2373,12 @@
       <h2 style="margin-bottom: 24px; font-family: var(--font-heading);">Create New Article</h2>
       <form id="addBlogForm" class="auth-form active">
         <div class="auth-input-group">
-          <label>Article Title</label>
+          <label for="blogTitle">Article Title</label>
           <input type="text" id="blogTitle" placeholder="e.g., The Magic of Turmeric" required>
         </div>
         <div class="form-row" style="display: flex; gap: 20px; margin-bottom: 20px;">
           <div class="auth-input-group" style="flex: 1; margin-bottom: 0;">
-            <label>Category</label>
+            <label for="blogCategory">Category</label>
             <select id="blogCategory" class="form-input" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); padding: 12px; font-family: var(--font-body);">
               <option value="Nutrition">Nutrition</option>
               <option value="Science">Science</option>
@@ -2334,20 +2386,20 @@
             </select>
           </div>
           <div class="auth-input-group" style="flex: 1; margin-bottom: 0;">
-            <label>Read Time (min)</label>
+            <label for="blogReadTime">Read Time (min)</label>
             <input type="number" id="blogReadTime" placeholder="5" required>
           </div>
         </div>
         <div class="auth-input-group">
-          <label>Short Excerpt</label>
+          <label for="blogExcerpt">Short Excerpt</label>
           <input type="text" id="blogExcerpt" placeholder="A brief summary of your article..." required>
         </div>
         <div class="auth-input-group">
-          <label>Full Content (HTML supported)</label>
+          <label for="blogFullContent">Full Content (HTML supported)</label>
           <textarea id="blogFullContent" placeholder="Write your masterpiece here..." required style="width: 100%; min-height: 200px; padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); resize: vertical;"></textarea>
         </div>
         <div class="auth-input-group">
-          <label>Author Name</label>
+          <label for="blogAuthor">Author Name</label>
           <input type="text" id="blogAuthor" placeholder="Your Name" required>
         </div>
         <button type="submit" class="btn btn-primary auth-btn" style="margin-top: 10px;">Publish Article</button>
@@ -2695,6 +2747,45 @@
         protein: 36, carbs: 22, fat: 14,
         ingredients: ["400g Lean Ground Turkey", "60g Finely Ground Oat Flour", "1 Large Egg", "240ml Organic Tomato Marinara", "150g Zucchini Noodles (Spiralized)", "5g Fresh Basil Leaves"],
         instructions: ["Mix turkey, oat flour, and egg; form into small meatballs.", "Bake at 200°C for 15-20 minutes until browned.", "Simmer meatballs in marinara sauce for another 10 minutes.", "Serve over zucchini noodles and garnish with basil."]
+      },
+      r13: {
+        title: "Dal Tadka & Jeera Rice",
+        image: "recipe_dal_tadka_jeera_rice_premium_1777902030190.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Easy",
+        kcal: "340",
+        time: "20 min",
+        serving: "1 Bowl",
+        protein: 12, carbs: 54, fat: 8,
+        ingredients: ["200g Yellow Toor Dal", "150g Basmati Rice", "20g Ghee", "5g Cumin Seeds", "1 tsp Turmeric", "2 cloves Garlic", "2 Dried Red Chilies"],
+        instructions: ["Pressure cook dal with turmeric and salt until soft.", "Cook rice with cumin seeds and whole spices.", "Heat ghee, sauté cumin, garlic, and chilies; pour over dal.", "Garnish with fresh cilantro and serve hot."]
+      },
+      r14: {
+        title: "Vegetable Biryani",
+        image: "recipe_vegetable_biryani_premium_1777902045937.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Medium",
+        kcal: "420",
+        time: "40 min",
+        serving: "1 Pot",
+        protein: 10, carbs: 72, fat: 12,
+        ingredients: ["200g Basmati Rice", "150g Mixed Vegetables (Carrots, Peas, Beans)", "2 tbsp Biryani Masala", "100g Greek Yogurt", "1 pinch Saffron", "Fresh Mint & Fried Onions"],
+        instructions: ["Par-boil rice with whole spices (cloves, cardamom).", "Cook vegetables in a spicy yogurt gravy.", "Layer rice and vegetables in a heavy-bottomed pot.", "Seal and cook on low heat (Dum) for 15-20 mins."]
+      },
+      r15: {
+        title: "Crispy Masala Dosa",
+        image: "recipe_masala_dosa_premium_1777902060644.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Medium",
+        kcal: "280",
+        time: "15 min",
+        serving: "1 Dosa",
+        protein: 8, carbs: 48, fat: 10,
+        ingredients: ["200ml Fermented Dosa Batter", "2 Large Boiled Potatoes", "1 tsp Mustard Seeds", "10 Curry Leaves", "1/2 tsp Turmeric", "2 Green Chilies"],
+        instructions: ["Prepare potato masala by sautéing mustard seeds, chilies, and mashed potatoes.", "Spread batter thinly on a hot non-stick griddle.", "Drizzle ghee on edges until golden and crispy.", "Place filling in center, fold, and serve with chutney."]
       }
     };
 
@@ -2714,9 +2805,9 @@
             </div>
             <h2>${recipe.title}</h2>
             <div class="modal-meta">
-              <span id="displayKcal">🔥 ${recipe.kcal} kcal</span>
-              <span>⏱️ ${recipe.time}</span>
-              <span>📦 ${recipe.serving}</span>
+              <span id="displayKcal"><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> ${recipe.kcal} kcal</span>
+              <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> ${recipe.time}</span>
+              <span><i class="fas fa-box-open" style="color: #3a7d44; margin-right: 5px;"></i> ${recipe.serving}</span>
             </div>
             <div style="margin-top: 20px; display: flex; align-items: center; gap: 15px;">
               <div class="quantity-control" style="display: flex; align-items: center; background: var(--bg-cream); border-radius: 50px; padding: 4px 12px; border: 1px solid var(--border-color);">
@@ -2760,7 +2851,7 @@
       qtyEl.innerText = current;
       
       const recipe = recipeData[id];
-      kcalEl.innerHTML = `🔥 ${parseInt(recipe.kcal) * current} kcal`;
+      kcalEl.innerHTML = `<i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> ${parseInt(recipe.kcal) * current} kcal`;
     }
 
     function closeRecipe() {
@@ -2823,8 +2914,8 @@
             <span class="tag tag-category">${blog.category}</span>
             <h2 style="font-size: 32px; margin-top: 12px;">${blog.title}</h2>
             <div class="modal-meta" style="margin-top: 16px;">
-              <span>✍️ ${blog.author}</span>
-              <span>⏱️ ${blog.readTime} read</span>
+              <span><i class="fas fa-pen-nib" style="color: #3a7d44; margin-right: 5px;"></i> ${blog.author}</span>
+              <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> ${blog.readTime} read</span>
             </div>
           </div>
         </div>
@@ -3297,51 +3388,69 @@
 
 
     function updateDashboardUI(data) {
-      if (!data) return;
+      if (!data || !data.today || !data.targets) {
+        console.warn("Dashboard data missing 'today' or 'targets' properties. Data received:", data);
+        // If we have some data, we can try to proceed with defaults, 
+        // but it's better to ensure we have the core structure.
+        if (!data) return;
+      }
 
       // Update Stats
-      document.getElementById('dashConsumed').innerText = data.today.calories;
-      document.getElementById('dashGoal').innerText = data.targets.calories;
+      document.getElementById('dashConsumed').innerText = data.today.calories || 0;
+      document.getElementById('dashGoal').innerText = data.targets.calories || 2000;
       
       // Update Nutrition Hub sync
       const nConsumed = document.getElementById('nutritionConsumed');
-      if (nConsumed) nConsumed.innerText = data.today.calories.toLocaleString();
+      if (nConsumed) nConsumed.innerText = (data.today.calories || 0).toLocaleString();
       const nGoal = document.getElementById('nutritionGoal');
-      if (nGoal) nGoal.innerText = data.targets.calories.toLocaleString();
+      if (nGoal) nGoal.innerText = (data.targets.calories || 2000).toLocaleString();
       
       const nPro = document.getElementById('nutritionPro');
-      if (nPro) nPro.innerText = data.today.protein + 'g';
+      if (nPro) nPro.innerText = (data.today.protein || 0) + 'g';
       const nProGoal = document.getElementById('nutritionProGoal');
-      if (nProGoal) nProGoal.innerText = (data.targets.macros.protein || data.targets.macros.proteinGrams) + 'g';
+      if (nProGoal) {
+        const proGoal = data.targets.macros?.protein || data.targets.macros?.proteinGrams || 150;
+        nProGoal.innerText = proGoal + 'g';
+      }
       
       const nCarb = document.getElementById('nutritionCarb');
-      if (nCarb) nCarb.innerText = data.today.carbs + 'g';
+      if (nCarb) nCarb.innerText = (data.today.carbs || 0) + 'g';
       const nCarbGoal = document.getElementById('nutritionCarbGoal');
-      if (nCarbGoal) nCarbGoal.innerText = (data.targets.macros.carbs || data.targets.macros.carbGrams) + 'g';
+      if (nCarbGoal) {
+        const carbGoal = data.targets.macros?.carbs || data.targets.macros?.carbGrams || 250;
+        nCarbGoal.innerText = carbGoal + 'g';
+      }
 
       const nFat = document.getElementById('nutritionFat');
-      if (nFat) nFat.innerText = data.today.fat + 'g';
+      if (nFat) nFat.innerText = (data.today.fat || 0) + 'g';
       const nFatGoal = document.getElementById('nutritionFatGoal');
-      if (nFatGoal) nFatGoal.innerText = (data.targets.macros.fat || data.targets.macros.fatGrams) + 'g';
+      if (nFatGoal) {
+        const fatGoal = data.targets.macros?.fat || data.targets.macros?.fatGrams || 70;
+        nFatGoal.innerText = fatGoal + 'g';
+      }
       
       const nHydroGoal = document.getElementById('nutritionHydroGoal');
-      if (nHydroGoal) nHydroGoal.innerText = data.targets.hydration + 'L';
+      if (nHydroGoal) nHydroGoal.innerText = (data.targets.hydration || 2.5) + 'L';
       const nFiberGoal = document.getElementById('nutritionFiberGoal');
-      if (nFiberGoal) nFiberGoal.innerText = data.targets.fiber + 'g';
+      if (nFiberGoal) nFiberGoal.innerText = (data.targets.fiber || 30) + 'g';
 
       // Macros Text
-      document.getElementById('dashProText').innerText = `${data.today.protein}g / ${data.targets.macros.protein || data.targets.macros.proteinGrams}g`;
-      document.getElementById('dashCarbText').innerText = `${data.today.carbs}g / ${data.targets.macros.carbs || data.targets.macros.carbGrams}g`;
-      document.getElementById('dashFatText').innerText = `${data.today.fat}g / ${data.targets.macros.fat || data.targets.macros.fatGrams}g`;
+      const proMax = data.targets.macros?.protein || data.targets.macros?.proteinGrams || 150;
+      const carbMax = data.targets.macros?.carbs || data.targets.macros?.carbGrams || 250;
+      const fatMax = data.targets.macros?.fat || data.targets.macros?.fatGrams || 70;
+
+      document.getElementById('dashProText').innerText = `${data.today.protein || 0}g / ${proMax}g`;
+      document.getElementById('dashCarbText').innerText = `${data.today.carbs || 0}g / ${carbMax}g`;
+      document.getElementById('dashFatText').innerText = `${data.today.fat || 0}g / ${fatMax}g`;
       
       // Progress Bars
-      const calcPercent = (val, max) => Math.min(100, Math.round((val / max) * 100)) + '%';
-      document.getElementById('dashProBar').style.width = calcPercent(data.today.protein, data.targets.macros.protein || data.targets.macros.proteinGrams);
-      document.getElementById('dashCarbBar').style.width = calcPercent(data.today.carbs, data.targets.macros.carbs || data.targets.macros.carbGrams);
-      document.getElementById('dashFatBar').style.width = calcPercent(data.today.fat, data.targets.macros.fat || data.targets.macros.fatGrams);
+      const calcPercent = (val, max) => Math.min(100, Math.round((val / (max || 1)) * 100)) + '%';
+      document.getElementById('dashProBar').style.width = calcPercent(data.today.protein || 0, proMax);
+      document.getElementById('dashCarbBar').style.width = calcPercent(data.today.carbs || 0, carbMax);
+      document.getElementById('dashFatBar').style.width = calcPercent(data.today.fat || 0, fatMax);
       
       // Update Food List
-      renderTodayFood(data.todayLogs);
+      renderTodayFood(data.todayLogs || []);
 
       // Pre-fill Profile Form
       if (data.userProfile) {
@@ -3362,21 +3471,40 @@
       const cached = localStorage.getItem('nutri_dash_cache');
       if (cached) {
         try {
-          updateDashboardUI(JSON.parse(cached));
-        } catch(e) {}
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.today && parsed.targets) {
+            updateDashboardUI(parsed);
+          } else {
+            localStorage.removeItem('nutri_dash_cache');
+          }
+        } catch(e) {
+          localStorage.removeItem('nutri_dash_cache');
+        }
       }
 
       try {
         const response = await fetch(`${API_BASE}/user/dashboard`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
+        
+        if (response.status === 401) {
+          console.warn("Session expired or unauthorized. Logging out...");
+          logout();
+          return;
+        }
+
+        if (!response.ok) throw new Error('Failed to fetch dashboard data');
+        
         const data = await response.json();
         
-        // Save to cache
-        localStorage.setItem('nutri_dash_cache', JSON.stringify(data));
-        
-        // Update UI with fresh data
-        updateDashboardUI(data);
+        if (data && data.today && data.targets) {
+          // Save to cache only if it's valid
+          localStorage.setItem('nutri_dash_cache', JSON.stringify(data));
+          // Update UI with fresh data
+          updateDashboardUI(data);
+        } else {
+          console.error("Dashboard response is missing required fields:", data);
+        }
       } catch (err) {
         console.error("Dashboard failed to load", err);
       }
@@ -3960,15 +4088,58 @@
 
 
     // Initialize Page
+  </script>
+  <script src="PillNav.js"></script>
+  <script>
+    let pillNavInstance;
+    
+    function getPillNavItems() {
+      const items = [
+        { label: 'Home', href: 'home' },
+        { label: 'Features', href: 'features' },
+        { label: 'Recipes', href: 'recipes' },
+        { label: 'AI Coach', href: 'ai-coach' }
+      ];
+      
+      const currentUser = JSON.parse(localStorage.getItem('nutri_user'));
+      if (currentUser) {
+        items.push({ label: 'Dashboard', href: 'dashboard' });
+      }
+      return items;
+    }
+
+    function initOrRefreshPillNav() {
+      pillNavInstance = window.initPillNav({
+        container: '#pill-nav-root',
+        items: getPillNavItems(),
+        activeHref: 'home',
+        baseColor: '#ffffff',
+        pillColor: '#3a7d44',
+        hoveredPillTextColor: '#3a7d44',
+        pillTextColor: '#ffffff',
+        onItemClick: (href, label) => {
+          if (href === 'home' || href === 'features' || href === 'recipes' || href === 'ai-coach' || href === 'dashboard') {
+            showSection(href);
+          } else {
+            console.log('Clicked:', href, label);
+          }
+        }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       updateUIForUser();
-      // Ensure initial view has visible items
-      const activeView = document.querySelector('.view-section.active');
-      if (activeView) {
-        activeView.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
-      }
+      initOrRefreshPillNav();
     });
 
+    // Hook into existing updateUIForUser to refresh PillNav after its original logic runs
+    const originalUpdateUIForUser = window.updateUIForUser;
+    window.updateUIForUser = function() {
+      if (originalUpdateUIForUser) originalUpdateUIForUser();
+      if (typeof initOrRefreshPillNav === 'function') {
+        initOrRefreshPillNav();
+      }
+    };
   </script>
 </body>
 </html>
