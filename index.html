@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="PillNav.css">
@@ -16,21 +16,25 @@
   
   <style>
     :root {
-      --bg-cream: #fafaf7;
-      --primary-green: #3a7d44;
-      --accent-orange: #f4845f;
-      --light-green: #e8f5eb;
-      --text-dark: #2d3329;
-      --text-gray: #5e6b57;
-      --footer-bg: #1a2e1c;
+      --bg-cream: #f4f6f3;
+      --primary-green: #2d6a4f;
+      --primary-gradient: linear-gradient(135deg, #1b4332 0%, #40916c 100%);
+      --accent-orange: #e07a5f;
+      --light-green: #d8f3dc;
+      --text-dark: #1b2621;
+      --text-gray: #526059;
+      --footer-bg: #081c15;
       --white: #ffffff;
-      --border-color: #e6eae2;
-      --shadow: 0 10px 30px rgba(58, 125, 68, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --border-color: #d1dfd6;
+      --shadow: 0 16px 40px rgba(27, 67, 50, 0.08);
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
       
-      --font-heading: 'Playfair Display', serif;
-      --font-body: 'Lato', sans-serif;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
       
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     #splash-screen {
@@ -163,28 +167,41 @@
       margin: 0 auto;
       padding: 0 24px;
     }
+    
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 24px;
+    }
 
     /* Buttons */
     .btn {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 16px 32px;
       border-radius: 50px;
-      font-weight: 700;
+      font-weight: 600;
+      font-family: var(--font-body);
       cursor: pointer;
       transition: var(--transition);
       border: none;
       font-size: 16px;
-      font-family: var(--font-body);
+      letter-spacing: 0.5px;
+    }
+    .btn:active {
+      transform: scale(0.96);
     }
     
     .btn-primary {
-      background-color: var(--primary-green);
+      background: var(--primary-gradient);
       color: var(--white);
+      box-shadow: 0 8px 20px rgba(45, 106, 79, 0.2);
     }
     .btn-primary:hover {
-      background-color: #2c6335;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 12px 25px rgba(45, 106, 79, 0.3);
+      transform: translateY(-3px);
     }
     
     .btn-accent {
@@ -223,7 +240,7 @@
     }
 
     section {
-      padding: 80px 0;
+      padding: 100px 0;
     }
 
     /* Animations */
@@ -239,12 +256,13 @@
 
     /* 1. Navbar */
     header {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
       padding: 15px 0;
+      transition: all 0.3s ease;
     }
     header.scrolled {
       background-color: rgba(250, 250, 247, 0.95);
@@ -287,7 +305,7 @@
       gap: 40px;
       align-items: center;
       min-height: calc(100vh - 80px);
-      padding-top: 40px;
+      padding-top: 140px; /* Increased to clear navbar */
       padding-bottom: 40px;
       position: relative;
       overflow: hidden;
@@ -368,29 +386,22 @@
       gap: 30px;
     }
     .feature-card {
-      background: var(--white);
-      padding: 40px 30px;
-      border-radius: 20px;
+      padding: 40px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
       transition: var(--transition);
-      border: 1px solid var(--border-color);
     }
     .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow);
-      border-color: var(--primary-green);
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.9);
     }
     .feature-icon {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 40px;
+      color: var(--primary-green);
+      margin-bottom: 24px;
+      transition: transform 0.3s ease;
     }
-    .feature-card h3 {
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-    .feature-card p {
-      color: var(--text-gray);
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
     }
 
     /* 4. Meal Plans */
@@ -403,13 +414,10 @@
       gap: 24px;
     }
     .plan-card {
-      background: var(--bg-cream);
       padding: 30px 24px;
-      border-radius: 16px;
       text-align: center;
       position: relative;
       overflow: hidden;
-      border: 1px solid var(--border-color);
       transition: var(--transition);
     }
     .plan-card::before {
@@ -472,15 +480,13 @@
       gap: 30px;
     }
     .recipe-card {
-      background: var(--white);
-      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
       transition: var(--transition);
       cursor: pointer;
     }
     .recipe-card:hover {
       transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.9);
       box-shadow: var(--shadow);
     }
     .recipe-img {
@@ -518,6 +524,52 @@
     .tag-diff { background: #fef0eb; color: var(--accent-orange); }
     .tag-veg { background: rgba(76, 175, 80, 0.1); color: #2e7d32; border: 1px solid rgba(76, 175, 80, 0.3); }
     .tag-nonveg { background: rgba(229, 57, 53, 0.1); color: #c62828; border: 1px solid rgba(229, 57, 53, 0.3); }
+    
+    .veg-logo {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #2e7d32;
+      padding: 2px;
+      vertical-align: middle;
+      background: white;
+      margin-right: 4px;
+      border-radius: 2px;
+    }
+    .veg-logo::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      background-color: #2e7d32;
+      border-radius: 50%;
+    }
+    
+    .nonveg-logo {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #8d6e63; /* Standard brown color for non-veg */
+      padding: 2px;
+      vertical-align: middle;
+      background: white;
+      position: relative;
+      margin-right: 4px;
+      border-radius: 2px;
+    }
+    .nonveg-logo::before {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 7px solid #8d6e63;
+      position: absolute;
+      top: 2.5px;
+      left: 2px;
+    }
+
     .recipe-title {
       font-size: 20px;
       margin-bottom: 12px;
@@ -530,14 +582,11 @@
       border-top: 1px solid var(--border-color);
       padding-top: 16px;
     }
-    .hidden-recipe { display: none !important; }
+    .hidden-recipe { display: none; }
 
     /* 6. Daily Food Log & 8. AI Smart Coach shared */
     .dashboard-panel {
-      background: var(--white);
-      border-radius: 24px;
       padding: 40px;
-      box-shadow: var(--shadow);
     }
     .metrics-grid {
       display: grid;
@@ -604,10 +653,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
-      background: var(--bg-cream);
-      border-radius: 24px;
       padding: 40px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
     }
     .calc-form {
       display: flex;
@@ -635,15 +681,12 @@
     }
     
     .calc-results {
-      background: var(--white);
-      border-radius: 16px;
       padding: 32px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      border: 1px solid var(--border-color);
     }
     .empty-state {
       display: flex;
@@ -805,23 +848,38 @@
 
     /* 9. Dedicated AI Coach Section */
     .ai-coach-section {
-      background-color: #0d1a0f; /* Premium Dark Consult Theme */
-      color: var(--white);
+      background: linear-gradient(135deg, #f4f6f3 0%, #e0ece4 100%);
+      padding: 0;
       height: 100vh;
-      padding: 80px 0 0 0 !important;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
     }
-    .ai-coach-section .container {
-      max-width: 100%;
-      padding: 0;
-      margin: 0;
-      height: 100%;
-    }
+    
     .ai-coach-container {
+      flex: 1;
       display: flex;
-      height: 100%;
-      gap: 0;
+      flex-direction: column;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 1200px;
+      padding-top: 80px; 
     }
+    
+    .ai-chat-window {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--glass-shadow);
+    }
+    
     .ai-sidebar {
       width: 300px;
       background: rgba(13, 26, 15, 0.95);
@@ -1589,32 +1647,32 @@
       <p>We combine premium culinary inspiration with scientific nutrition tracking to help you reach your goals effortlessly.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card fade-up" style="padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_meal_plans.png');"></div>
         <h3>Personalized Meal Plans</h3>
         <p>Tailored weekly plans designed around your lifestyle, goals, and dietary preferences.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay: 0.1s; padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="transition-delay: 0.1s; padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_nutrition_tracking.png');"></div>
         <h3>Nutrition Tracking</h3>
         <p>Log your meals seamlessly and track your macros with our intelligent dashboard.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay: 0.2s; padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="transition-delay: 0.2s; padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_ai_coaching.png');"></div>
         <h3>AI Assistant</h3>
         <p>Your dedicated NutriBot is always ready to answer your health queries.</p>
       </div>
-      <div class="feature-card fade-up" style="padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_easy_recipes.png');"></div>
         <h3>Easy Recipes</h3>
         <p>Hundreds of quick, delicious recipes that don't compromise on flavor or health.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay: 0.1s; padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="transition-delay: 0.1s; padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_plant_based.png');"></div>
         <h3>Plant-Based Options</h3>
         <p>Extensive library of vegan and vegetarian meals to support plant-forward eating.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay: 0.2s; padding-top: 0; overflow: hidden;">
+      <div class="feature-card glass-panel fade-up" style="transition-delay: 0.2s; padding-top: 0; overflow: hidden;">
         <div class="feature-img" style="background-image: url('assets/feature_dietitian_tips.png');"></div>
         <h3>Expert Dietitian Tips</h3>
         <p>Guidance backed by science from certified nutritionists and health experts.</p>
@@ -1630,35 +1688,35 @@
         <p>Choose a path that aligns with your body's needs. All plans include automated grocery lists and prep guides.</p>
       </div>
       <div class="meal-plans-grid">
-        <div class="plan-card fade-up">
+        <div class="plan-card glass-panel fade-up">
           <div class="plan-img" style="background-image: url('assets/meal_plan_vegan.png');"></div>
           <h3>Vegan Plan</h3>
           <p>100% plant-based meals rich in micronutrients and fiber.</p>
           <div class="plan-badge">1800 - 2200 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="openPlan('vegan')">View Plan</button>
         </div>
-        <div class="plan-card fade-up" style="transition-delay: 0.1s;">
+        <div class="plan-card glass-panel fade-up" style="transition-delay: 0.1s;">
           <div class="plan-img" style="background-image: url('assets/meal_plan_keto.png');"></div>
           <h3>Keto Protocol</h3>
           <p>High fat, low carb meals designed for sustained ketosis.</p>
           <div class="plan-badge">1600 - 2000 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="openPlan('keto')">View Plan</button>
         </div>
-        <div class="plan-card fade-up" style="transition-delay: 0.2s;">
+        <div class="plan-card glass-panel fade-up" style="transition-delay: 0.2s;">
           <div class="plan-img" style="background-image: url('assets/meal_plan_balanced.png');"></div>
           <h3>Balanced Diet</h3>
           <p>The perfect macro split for everyday energy and wellness.</p>
           <div class="plan-badge">2000 - 2400 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="openPlan('balanced')">View Plan</button>
         </div>
-        <div class="plan-card fade-up" style="transition-delay: 0.3s;">
+        <div class="plan-card glass-panel fade-up" style="transition-delay: 0.3s;">
           <div class="plan-img" style="background-image: url('assets/meal_plan_highprotein.png');"></div>
           <h3>High Protein</h3>
           <p>Muscle-building focus with optimal protein distribution.</p>
           <div class="plan-badge">2200 - 2800 kcal</div>
           <button class="btn btn-outline" style="width: 100%;" onclick="openPlan('protein')">View Plan</button>
         </div>
-        <div class="plan-card fade-up" style="transition-delay: 0.4s;">
+        <div class="plan-card glass-panel fade-up" style="transition-delay: 0.4s;">
           <div class="plan-img" style="background-image: url('assets/meal_plan_fasting.png');"></div>
           <h3>Intermittent Fasting</h3>
           <p>Timing-based 16:8 protocol with specialized meal categorization.</p>
@@ -1676,14 +1734,23 @@
       <p>Healthy cooking doesn't have to be boring. Explore our community's favorite premium recipes.</p>
     </div>
     
-    <div class="coach-tabs fade-up" style="margin-bottom: 40px;">
-      <button class="coach-tab active" onclick="filterRecipes('All', this)">All Recipes</button>
-      <button class="coach-tab" onclick="filterRecipes('Veg', this)">🍃 Pure Veg</button>
-      <button class="coach-tab" onclick="filterRecipes('Non-Veg', this)">🍖 Non-Veg</button>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 40px;">
+      <div class="coach-tabs fade-up" style="margin-bottom: 15px;">
+        <button class="coach-tab active" data-filter-group="diet" onclick="setRecipeFilter('diet', 'All', this)">All Diets</button>
+        <button class="coach-tab" data-filter-group="diet" onclick="setRecipeFilter('diet', 'Veg', this)"><span class="veg-logo"></span> Pure Veg</button>
+        <button class="coach-tab" data-filter-group="diet" onclick="setRecipeFilter('diet', 'Non-Veg', this)"><span class="nonveg-logo"></span> Non-Veg</button>
+      </div>
+      <div class="coach-tabs fade-up">
+        <button class="coach-tab active" data-filter-group="category" onclick="setRecipeFilter('category', 'All', this)">All Meals</button>
+        <button class="coach-tab" data-filter-group="category" onclick="setRecipeFilter('category', 'Breakfast', this)"><i class="fa-solid fa-mug-hot" style="color: #ff9800;"></i> Breakfast</button>
+        <button class="coach-tab" data-filter-group="category" onclick="setRecipeFilter('category', 'Lunch', this)"><i class="fa-solid fa-bowl-food" style="color: #fbc02d;"></i> Lunch</button>
+        <button class="coach-tab" data-filter-group="category" onclick="setRecipeFilter('category', 'Dinner', this)"><i class="fa-solid fa-utensils" style="color: #3f51b5;"></i> Dinner</button>
+        <button class="coach-tab" data-filter-group="category" onclick="setRecipeFilter('category', 'Snack', this)"><i class="fa-solid fa-apple-whole" style="color: #e91e63;"></i> Snack</button>
+      </div>
     </div>
     <div class="recipe-grid">
       <!-- Recipe 1 -->
-      <div class="recipe-card fade-up" data-diet="Veg" onclick="openRecipe('r1')">
+      <div class="recipe-card glass-panel fade-up" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r1')">
         <div class="recipe-img" style="background-image: url('assets/recipe_smoothie_bowl_1777281936645.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1699,7 +1766,7 @@
         </div>
       </div>
       <!-- Recipe 2 -->
-      <div class="recipe-card fade-up" data-diet="Veg" style="transition-delay: 0.1s;" onclick="openRecipe('r2')">
+      <div class="recipe-card glass-panel fade-up" data-diet="Veg" data-category="Lunch" style="transition-delay: 0.1s;" onclick="openRecipe('r2')">
         <div class="recipe-img" style="background-image: url('assets/recipe_quinoa_bowl_1777281953047.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1715,7 +1782,7 @@
         </div>
       </div>
       <!-- Recipe 3 -->
-      <div class="recipe-card fade-up" data-diet="Non-Veg" style="transition-delay: 0.2s;" onclick="openRecipe('r3')">
+      <div class="recipe-card glass-panel fade-up" data-diet="Non-Veg" data-category="Dinner" style="transition-delay: 0.2s;" onclick="openRecipe('r3')">
         <div class="recipe-img" style="background-image: url('assets/recipe_salmon_salad_1777281978982.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1731,7 +1798,7 @@
         </div>
       </div>
       <!-- Recipe 4 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r4')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Snack" onclick="openRecipe('r4')">
         <div class="recipe-img" style="background-image: url('assets/recipe_avocado_toast_1777281995193.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1747,7 +1814,7 @@
         </div>
       </div>
       <!-- Recipe 5 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.1s;" onclick="openRecipe('r5')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Dinner" style="transition-delay: 0.1s;" onclick="openRecipe('r5')">
         <div class="recipe-img" style="background-image: url('assets/recipe_chickpea_curry_1777282012357.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1763,7 +1830,7 @@
         </div>
       </div>
       <!-- Recipe 6 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.2s;" onclick="openRecipe('r6')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" style="transition-delay: 0.2s;" onclick="openRecipe('r6')">
         <div class="recipe-img" style="background-image: url('assets/recipe_overnight_oats_1777282032579.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1779,7 +1846,7 @@
         </div>
       </div>
       <!-- Recipe 7 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r7')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Snack" onclick="openRecipe('r7')">
         <div class="recipe-img" style="background-image: url('assets/recipe_paneer_tikka_premium_1777383420443.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1795,7 +1862,7 @@
         </div>
       </div>
       <!-- Recipe 8 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Non-Veg" onclick="openRecipe('r8')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Non-Veg" data-category="Dinner" onclick="openRecipe('r8')">
         <div class="recipe-img" style="background-image: url('assets/recipe_grilled_chicken_1777383151382.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1811,7 +1878,7 @@
         </div>
       </div>
       <!-- Recipe 9 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r9')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Lunch" onclick="openRecipe('r9')">
         <div class="recipe-img" style="background-image: url('assets/recipe_lentil_soup_1777383169865.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1827,7 +1894,7 @@
         </div>
       </div>
       <!-- Recipe 10 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r10')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Lunch" onclick="openRecipe('r10')">
         <div class="recipe-img" style="background-image: url('assets/recipe_tofu_salad_1777383186338.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1843,7 +1910,7 @@
         </div>
       </div>
       <!-- Recipe 11 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r11')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r11')">
         <div class="recipe-img" style="background-image: url('assets/recipe_egg_white_omelette_1777383436187.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1859,7 +1926,7 @@
         </div>
       </div>
       <!-- Recipe 12 -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Non-Veg" onclick="openRecipe('r12')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Non-Veg" data-category="Dinner" onclick="openRecipe('r12')">
         <div class="recipe-img" style="background-image: url('assets/recipe_turkey_meatballs_1777383450321.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1875,7 +1942,7 @@
         </div>
       </div>
       <!-- Recipe 13: Dal Tadka -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" onclick="openRecipe('r13')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Lunch" onclick="openRecipe('r13')">
         <div class="recipe-img" style="background-image: url('assets/recipe_dal_tadka_jeera_rice_premium_1777902030190.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1891,7 +1958,7 @@
         </div>
       </div>
       <!-- Recipe 14: Veg Biryani -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.1s;" onclick="openRecipe('r14')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Dinner" style="transition-delay: 0.1s;" onclick="openRecipe('r14')">
         <div class="recipe-img" style="background-image: url('assets/recipe_vegetable_biryani_premium_1777902045937.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1907,7 +1974,7 @@
         </div>
       </div>
       <!-- Recipe 15: Masala Dosa -->
-      <div class="recipe-card fade-up hidden-recipe" data-diet="Veg" style="transition-delay: 0.2s;" onclick="openRecipe('r15')">
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" style="transition-delay: 0.2s;" onclick="openRecipe('r15')">
         <div class="recipe-img" style="background-image: url('assets/recipe_masala_dosa_premium_1777902060644.png');"></div>
         <div class="recipe-content">
           <div class="recipe-tags">
@@ -1919,6 +1986,150 @@
           <div class="recipe-meta">
             <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 280 kcal</span>
             <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 15 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 16: Rava Upma -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r16')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_rava_upma_1778221570233.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Rava Upma</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 250 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 15 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 17: Poha -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r17')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_poha_1778221587084.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Poha</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 220 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 10 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 18: Semiya Upma -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r18')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_semiya_upma_1778221602755.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Semiya Upma</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 260 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 15 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 19: Rava Idli -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r19')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_rava_idli_1778221623881.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Medium</span>
+          </div>
+          <h3 class="recipe-title">Rava Idli</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 210 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 25 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 20: Besan Chilla -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r20')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_besan_chilla_1778221641238.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Besan Chilla</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 180 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 10 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 21: Suji Appe -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Snack" onclick="openRecipe('r21')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_suji_appe_1778221658834.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Medium</span>
+          </div>
+          <h3 class="recipe-title">Suji Appe</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 200 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 20 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 22: Moong Dal Chilla -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r22')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_moong_dal_chilla_1778221673950.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Medium</span>
+          </div>
+          <h3 class="recipe-title">Moong Dal Chilla</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 190 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 25 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 23: Rava Dosa -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Veg" data-category="Breakfast" onclick="openRecipe('r23')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_rava_dosa_1778221703155.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-veg">Veg</span>
+            <span class="tag tag-category">Indian</span>
+            <span class="tag tag-diff">Hard</span>
+          </div>
+          <h3 class="recipe-title">Rava Dosa</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 250 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 20 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Recipe 24: Omelette -->
+      <div class="recipe-card glass-panel fade-up hidden-recipe" data-diet="Non-Veg" data-category="Breakfast" onclick="openRecipe('r24')">
+        <div class="recipe-img" style="background-image: url('assets/recipe_omelette_1778221728025.png');"></div>
+        <div class="recipe-content">
+          <div class="recipe-tags">
+            <span class="tag tag-nonveg">Non-Veg</span>
+            <span class="tag tag-category">Breakfast</span>
+            <span class="tag tag-diff">Easy</span>
+          </div>
+          <h3 class="recipe-title">Omelette</h3>
+          <div class="recipe-meta">
+            <span><i class="fas fa-fire-alt" style="color: #f4845f; margin-right: 5px;"></i> 220 kcal</span>
+            <span><i class="far fa-clock" style="color: #3a7d44; margin-right: 5px;"></i> 5 min</span>
           </div>
         </div>
       </div>
@@ -2005,7 +2216,7 @@
           <div class="avatar av-2">M</div>
           <div class="test-author">Michael Ross</div>
         </div>
-        <div class="test-card fade-up" style="transition-delay: 0.2s;">
+        <div class="test-card glass-panel fade-up" style="transition-delay: 0.2s;">
           <div class="stars">★★★★★</div>
           <p class="test-quote">"As a vegan athlete, finding high-protein recipes was tough. This platform is a complete game changer."</p>
           <div class="avatar av-3">J</div>
@@ -2078,7 +2289,7 @@
       <div class="dashboard-grid">
         <!-- Main Stats Panel -->
         <div class="dashboard-panel fade-up" style="padding: 0; overflow: hidden;">
-          <div class="main-stats" style="background: var(--bg-cream); height: 100%;">
+          <div class="main-stats glass-panel" style="background: var(--bg-cream); height: 100%;">
             <div style="text-align: center; margin-bottom: 30px;">
               <h3 style="margin-bottom: 8px;">Calorie Intake</h3>
               <p style="font-size: 14px; color: var(--text-gray);">Daily progression</p>
@@ -2798,6 +3009,123 @@
         protein: 8, carbs: 48, fat: 10,
         ingredients: ["200ml Fermented Dosa Batter", "2 Large Boiled Potatoes", "1 tsp Mustard Seeds", "10 Curry Leaves", "1/2 tsp Turmeric", "2 Green Chilies"],
         instructions: ["Prepare potato masala by sautéing mustard seeds, chilies, and mashed potatoes.", "Spread batter thinly on a hot non-stick griddle.", "Drizzle ghee on edges until golden and crispy.", "Place filling in center, fold, and serve with chutney."]
+      },
+      r16: {
+        title: "Rava Upma",
+        image: "assets/recipe_rava_upma_1778221570233.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Easy",
+        kcal: "250",
+        time: "15 min",
+        serving: "1 Plate",
+        protein: 6, carbs: 45, fat: 5,
+        ingredients: ["100g Rava (Semolina)", "1 tsp Mustard seeds", "1/2 Onion (chopped)", "1 Green chili", "10 Curry leaves", "1 tsp Urad dal", "1 tbsp Ghee", "2 cups Hot water"],
+        instructions: ["Roast rava until fragrant and set aside.", "Heat ghee, temper mustard seeds, urad dal, curry leaves, chili, and onion.", "Add hot water and salt, bring to a boil.", "Slowly stir in roasted rava to prevent lumps, cover and cook for 2 minutes."]
+      },
+      r17: {
+        title: "Poha",
+        image: "assets/recipe_poha_1778221587084.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Easy",
+        kcal: "220",
+        time: "10 min",
+        serving: "1 Plate",
+        protein: 4, carbs: 42, fat: 4,
+        ingredients: ["100g Flattened Rice (Poha)", "1/2 Onion", "1/4 tsp Turmeric", "1 tsp Mustard seeds", "10 Curry leaves", "1 tbsp Peanuts", "1 tbsp Lemon juice"],
+        instructions: ["Wash poha gently and let it soften.", "Heat oil, roast peanuts, and temper mustard seeds, curry leaves, and onion.", "Add turmeric and salt, then gently mix in the softened poha.", "Cook for 2 mins, garnish with coriander and lemon juice."]
+      },
+      r18: {
+        title: "Semiya Upma",
+        image: "assets/recipe_semiya_upma_1778221602755.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Easy",
+        kcal: "260",
+        time: "15 min",
+        serving: "1 Plate",
+        protein: 5, carbs: 48, fat: 5,
+        ingredients: ["100g Roasted Vermicelli (Semiya)", "1/2 Onion", "1/2 Carrot", "2 tbsp Peas", "1 tsp Mustard seeds", "10 Curry leaves"],
+        instructions: ["Heat oil, add mustard seeds, curry leaves, and chopped vegetables.", "Sauté for 2 mins.", "Add 2 cups water, salt, and bring to boil.", "Add roasted vermicelli, cover, and cook until water is absorbed."]
+      },
+      r19: {
+        title: "Rava Idli",
+        image: "assets/recipe_rava_idli_1778221623881.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Medium",
+        kcal: "210",
+        time: "25 min",
+        serving: "3 Idlis",
+        protein: 7, carbs: 35, fat: 6,
+        ingredients: ["1 cup Rava", "1/2 cup Curd", "1 tsp Mustard seeds", "1 tbsp Chana dal", "1/2 inch Ginger (grated)", "1/2 tsp Eno (Fruit salt)", "1 tbsp Cashews"],
+        instructions: ["Roast rava and set aside.", "Temper mustard seeds, chana dal, cashews, and ginger.", "Mix roasted rava with tempered spices, curd, and water to make batter; let rest 15 mins.", "Add Eno, mix gently, pour into molds, and steam for 10-12 mins."]
+      },
+      r20: {
+        title: "Besan Chilla",
+        image: "assets/recipe_besan_chilla_1778221641238.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Easy",
+        kcal: "180",
+        time: "10 min",
+        serving: "2 Chillas",
+        protein: 10, carbs: 25, fat: 5,
+        ingredients: ["1 cup Besan (Gram flour)", "1/2 Onion (finely chopped)", "1/2 Tomato (finely chopped)", "1 Green chili", "1/4 tsp Carom seeds (Ajwain)", "Fresh coriander"],
+        instructions: ["Mix besan with water to form a smooth batter.", "Add chopped veggies, ajwain, salt, and coriander.", "Heat a non-stick pan, pour a ladle of batter, and spread thinly.", "Cook with a few drops of oil until golden brown on both sides."]
+      },
+      r21: {
+        title: "Suji Appe",
+        image: "assets/recipe_suji_appe_1778221658834.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Medium",
+        kcal: "200",
+        time: "20 min",
+        serving: "6 Appe",
+        protein: 6, carbs: 36, fat: 4,
+        ingredients: ["1 cup Suji (Rava)", "1/2 cup Curd", "1/4 cup Grated Carrots", "1/4 cup Capsicum", "1 tsp Mustard seeds", "1/2 tsp Eno"],
+        instructions: ["Mix suji, curd, veggies, and water; rest for 15 mins.", "Prepare a tempering of mustard seeds and add to the batter along with Eno.", "Pour batter into a greased appe pan.", "Cook covered until golden crisp on both sides."]
+      },
+      r22: {
+        title: "Moong Dal Chilla",
+        image: "assets/recipe_moong_dal_chilla_1778221673950.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Medium",
+        kcal: "190",
+        time: "25 min",
+        serving: "2 Chillas",
+        protein: 12, carbs: 28, fat: 3,
+        ingredients: ["1 cup Yellow Moong Dal (soaked)", "1 inch Ginger", "1 Green chili", "1/4 tsp Cumin seeds", "1 tbsp Oil", "Paneer (optional filling)"],
+        instructions: ["Blend soaked moong dal with ginger, chili, and cumin to a smooth batter.", "Heat a griddle, spread a ladle of batter thinly like a dosa.", "Drizzle a little oil, cook until crisp.", "Fold and serve with chutney."]
+      },
+      r23: {
+        title: "Rava Dosa",
+        image: "assets/recipe_rava_dosa_1778221703155.png",
+        category: "Indian",
+        diet: "Veg",
+        diff: "Hard",
+        kcal: "250",
+        time: "20 min",
+        serving: "2 Dosa",
+        protein: 5, carbs: 45, fat: 6,
+        ingredients: ["1/2 cup Rava", "1/2 cup Rice flour", "2 tbsp Maida", "1 tsp Cumin seeds", "1/2 Onion (finely chopped)", "1 Green chili", "Coriander"],
+        instructions: ["Mix rava, rice flour, maida, and spices with plenty of water to form a very thin, watery batter.", "Heat a pan until very hot.", "Pour the batter from a height to form a lacy texture.", "Add oil to edges, cook on medium heat until crisp (do not flip)."]
+      },
+      r24: {
+        title: "Omelette",
+        image: "assets/recipe_omelette_1778221728025.png",
+        category: "Breakfast",
+        diet: "Non-Veg",
+        diff: "Easy",
+        kcal: "220",
+        time: "5 min",
+        serving: "1 Omelette",
+        protein: 14, carbs: 2, fat: 16,
+        ingredients: ["2 Large Eggs", "1/4 Onion (chopped)", "1/4 Tomato", "1 Green chili", "1 tsp Butter", "Salt", "Pepper"],
+        instructions: ["Whisk eggs well with salt and pepper until fluffy.", "Add chopped onions, tomatoes, and chili to the beaten eggs.", "Heat butter in a pan, pour the egg mixture, and cook until the bottom is set.", "Fold in half and slide onto a plate."]
       }
     };
 
@@ -3086,44 +3414,50 @@
 
     // Load initial blogs
     loadBlogs();
+    let currentDietFilter = 'All';
+    let currentCategoryFilter = 'All';
 
-    function toggleAllRecipes() {
-      const hidden = document.querySelectorAll('.recipe-card.hidden-recipe');
-      const btn = document.getElementById('viewAllRecipesBtn');
-      const activeTab = document.querySelector('#recipes .coach-tab.active');
-      const currentDiet = activeTab ? (activeTab.innerText.includes('Veg') ? 'Veg' : 
-                          activeTab.innerText.includes('Non-Veg') ? 'Non-Veg' : 'All') : 'All';
-      
-      hidden.forEach(el => {
-        el.classList.remove('hidden-recipe');
-        el.classList.add('was-hidden');
-        // Still respect diet filter
-        if (currentDiet !== 'All' && el.getAttribute('data-diet') !== currentDiet) {
-           el.style.display = 'none';
-        } else {
-           el.style.display = 'block';
-           setTimeout(() => el.style.opacity = '1', 10);
-        }
-      });
-      btn.style.display = 'none';
-    }
-
-    function filterRecipes(diet, btn) {
-      // Update active button
+    function setRecipeFilter(group, value, btn) {
+      // Update active button visually in the group
       const buttons = btn.parentElement.querySelectorAll('.coach-tab');
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
+      if (group === 'diet') {
+        currentDietFilter = value;
+      } else if (group === 'category') {
+        currentCategoryFilter = value;
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
       const cards = document.querySelectorAll('.recipe-grid .recipe-card');
       const showAllBtn = document.getElementById('viewAllRecipesBtn');
-      const isExpanded = showAllBtn.style.display === 'none';
+      
+      // If any hidden recipe has the 'was-hidden' class, it means the user explicitly clicked "View All Recipes"
+      const isExpanded = document.querySelectorAll('.hidden-recipe.was-hidden').length > 0;
+
+      const isActiveFilter = currentDietFilter !== 'All' || currentCategoryFilter !== 'All';
+
+      // Button is visible only if we are not expanded AND there is no active filter
+      if (!isExpanded && !isActiveFilter) {
+        showAllBtn.style.display = 'inline-block';
+      } else {
+        showAllBtn.style.display = 'none';
+      }
 
       cards.forEach(card => {
         const cardDiet = card.getAttribute('data-diet');
+        const cardCategory = card.getAttribute('data-category');
         const isInitiallyHidden = card.classList.contains('hidden-recipe');
 
-        if (diet === 'All' || cardDiet === diet) {
-          if (!isInitiallyHidden || isExpanded) {
+        const matchesDiet = currentDietFilter === 'All' || cardDiet === currentDietFilter;
+        const matchesCategory = currentCategoryFilter === 'All' || cardCategory === currentCategoryFilter;
+
+        if (matchesDiet && matchesCategory) {
+          if (!isInitiallyHidden || isExpanded || isActiveFilter) {
             card.style.display = 'block';
             setTimeout(() => card.style.opacity = '1', 10);
           } else {
@@ -3134,6 +3468,28 @@
           setTimeout(() => card.style.display = 'none', 300);
         }
       });
+    }
+
+    function toggleAllRecipes() {
+      const btn = document.getElementById('viewAllRecipesBtn');
+      const hidden = document.querySelectorAll('.hidden-recipe');
+      
+      hidden.forEach(el => {
+        el.classList.add('was-hidden');
+        
+        const cardDiet = el.getAttribute('data-diet');
+        const cardCategory = el.getAttribute('data-category');
+        const matchesDiet = currentDietFilter === 'All' || cardDiet === currentDietFilter;
+        const matchesCategory = currentCategoryFilter === 'All' || cardCategory === currentCategoryFilter;
+        
+        if (matchesDiet && matchesCategory) {
+           el.style.display = 'block';
+           setTimeout(() => el.style.opacity = '1', 10);
+        } else {
+           el.style.display = 'none';
+        }
+      });
+      btn.style.display = 'none';
     }
 
     // Close on outside click
