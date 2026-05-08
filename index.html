@@ -807,18 +807,26 @@
     .ai-coach-section {
       background-color: #0d1a0f; /* Premium Dark Consult Theme */
       color: var(--white);
-      min-height: calc(100vh - 80px);
+      height: 100vh;
+      padding: 80px 0 0 0 !important;
+      overflow: hidden;
+    }
+    .ai-coach-section .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      height: 100%;
     }
     .ai-coach-container {
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 30px;
-      height: calc(100vh - 160px);
+      display: flex;
+      height: 100%;
+      gap: 0;
     }
     .ai-sidebar {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
+      width: 300px;
+      background: rgba(13, 26, 15, 0.95);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 0;
       padding: 30px;
       display: flex;
       flex-direction: column;
@@ -835,9 +843,10 @@
     .ai-stat-card h4 { font-size: 16px; color: var(--white); font-family: var(--font-body); }
     
     .ai-chat-main {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: #0d1a0f;
+      flex: 1;
+      border-radius: 0;
+      border: none;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -850,6 +859,7 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
+      scroll-behavior: smooth;
     }
     .ai-chat-messages::-webkit-scrollbar { width: 6px; }
     .ai-chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
@@ -2408,7 +2418,9 @@
   </div>
 
   <script>
-    const API_BASE = 'https://nutrilife-five.vercel.app';
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'http://localhost:3000' 
+      : 'https://nutrilife-five.vercel.app';
 
     // Recipe Data
     const blogData = {
@@ -3842,7 +3854,9 @@
       const container = document.getElementById('chatMessages');
       if (container) {
         container.appendChild(msg);
-        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+          container.scrollTop = container.scrollHeight;
+        }, 50);
       }
     }
 
@@ -3853,7 +3867,9 @@
       const container = document.getElementById('chatMessages');
       if (container) {
         container.appendChild(msg);
-        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+          container.scrollTop = container.scrollHeight;
+        }, 50);
       }
     }
 
@@ -3878,8 +3894,11 @@
       loadingMsg.className = 'ai-msg bot';
       loadingMsg.id = loadingId;
       loadingMsg.innerHTML = 'Thinking...';
-      document.getElementById('ai-section-messages').appendChild(loadingMsg);
-      loadingMsg.scrollIntoView({ behavior: 'smooth' });
+      const container = document.getElementById('ai-section-messages');
+      container.appendChild(loadingMsg);
+      setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+      }, 50);
 
       try {
         const response = await fetch(`${API_BASE}/chat`, {
@@ -3914,7 +3933,9 @@
       const container = document.getElementById('ai-section-messages');
       if (container) {
         container.appendChild(msg);
-        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+          container.scrollTop = container.scrollHeight;
+        }, 50);
       }
     }
 
@@ -3925,7 +3946,9 @@
       const container = document.getElementById('ai-section-messages');
       if (container) {
         container.appendChild(msg);
-        container.scrollTop = container.scrollHeight;
+        setTimeout(() => {
+          container.scrollTop = container.scrollHeight;
+        }, 50);
       }
     }
 
